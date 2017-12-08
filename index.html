@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Api</title>
+</head>
+<body>
+        <div>
+            <form action="post">
+                <input type="email" id="email" placeholder="Email">
+                <input type="password" id="password" placeholder="Contraseña">
+                <input type="submit" id="login" value="Ingresar">
+            </form>
+        </div>
+
+        <script type="application/javascript">
+            (function (){
+
+                'use strict';
+
+                const clientId = '2';
+                const clientSecret = 'VFfggynNOJbk1MCs8Efx2mw3pZ7v4oKFmNshqjLo';
+                const grantType = 'password';
+
+                let login = document.getElementById('login');
+
+                login.addEventListener('click', e => {
+
+                    e.preventDefault();
+
+                    fetch('http://127.0.0.1:8000/oauth/token', {
+                       method: 'POST',
+                       body: JSON.stringify({
+                           client_id: clientId,
+                           client_secret: clientSecret,
+                           grant_type: grantType,
+                           username: document.getElementById('email').value,
+                           password: document.getElementById('password').value
+                       }),
+                        headers: { 'content-Type': 'application/json' },
+                    }).then(response => {
+                        return response.json()
+                    }).then(data => {
+                        localStorage.setItem('token', data.access_token)
+                    })
+
+                });
+
+            })();
+        </script>
+</body>
+</html>

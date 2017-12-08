@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>listado de materias</title>
+</head>
+<body>
+        <ul>
+
+        </ul>
+
+        <script>
+            (function (){
+                'use strict';
+
+                if ( localStorage.getItem('token') ) {
+                    fetch('http://localhost:8000/api/subjects-json', {
+                        method: 'GET',
+                        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+                    }).then(response => {
+                            return response.json()
+                        }).then(data => {
+                            let li = '';
+                            data.subject.forEach((subject, index) => {
+                                console.log(subject);
+                                li += '<li>' + subject.name + '</li>';
+                            });
+                            document.querySelector('ul').innerHTML = li;
+                        })
+                }
+            })();
+        </script>
+</body>
+</html>
